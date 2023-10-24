@@ -30,4 +30,18 @@ test("renders App component", () => {
       const table = screen.getByRole("table");
       expect(table).toHaveTextContent(/go to coffee/i);
       });
+
+test("clear todos", () => {
+  render(<App />);
+  const desc = screen.getByPlaceholderText("Description");
+  fireEvent.change(desc, { target: { value: "Go to coffee" } });
+  const date = screen.getByPlaceholderText("Date");
+  fireEvent.change(date, { target: { value: "29.01.2021" } });
+  const button = screen.getByText("Add");
+  fireEvent.click(button);
+  const tablecell = screen.getByText(/go to coffee/i);
+  const removebutton = screen.getByText("Clear");
+  fireEvent.click(removebutton);
+  expect(tablecell).not.toBeInTheDocument();
+})
       
